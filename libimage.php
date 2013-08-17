@@ -308,7 +308,7 @@ class libImage {
                 $alpha = imagecolorsforindex($mask, imagecolorat($mask, $x, $y));
                 $color = imagecolorsforindex($picture, imagecolorat($picture, $x, $y));
                 $alpha = 127 - floor((127 - $color['alpha']) * ($alpha['red'] / 255));
-                if (127 === $alpha) {
+                if (127 == $alpha) { // int ? float
                     continue;
                 }
                 imagesetpixel($newPicture, $x, $y, imagecolorallocatealpha($newPicture, $color['red'], $color['green'], $color['blue'], $alpha));
