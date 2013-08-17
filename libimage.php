@@ -285,6 +285,7 @@ class libImage {
     }
 
 
+    // Inspired by: http://stackoverflow.com/questions/7203160/php-gd-use-one-image-to-mask-another-image-including-transparency
     public function imagealphamask(&$picture, $mask) {
         // Get sizes and set up new picture
         $xSize = imagesx($picture);
@@ -306,7 +307,7 @@ class libImage {
             for ($y = 0; $y < $ySize; $y++) {
                 $alpha = imagecolorsforindex($mask, imagecolorat($mask, $x, $y));
                 $color = imagecolorsforindex($picture, imagecolorat($picture, $x, $y));
-                $alpha = 127 - floor((127-$color['alpha']) * ($alpha['red'] / 255));
+                $alpha = 127 - floor((127 - $color['alpha']) * ($alpha['red'] / 255));
                 if (127 === $alpha) {
                     continue;
                 }
