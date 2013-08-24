@@ -232,7 +232,8 @@ class libImage {
                   . '/' . substr($hash, 0, 1)
                   . '/' . substr($hash, 1, 2);
             $file = "{$dir}/{$hash}.{$format}";
-            if (file_exists($file) && time() - filemtime($file) <= $period) {
+            if (file_exists($file)
+             && (time() - ($filemtime = filemtime($file)) <= $period)) {
                 if ($asImage) {
                     switch ($format) {
                         case 'gif':
@@ -244,10 +245,8 @@ class libImage {
                         default:
                             return @ImageCreateFromPNG($file);
                     }
-                } else {
-                    if (($rsFile = @fopen($file, 'rb'))) {
-                        return $rsFile;
-                    }
+                } else if (($rsFile = @fopen($file, 'rb'))) {
+                    return ['time' => $filemtime, 'resource' => $rsFile];
                 }
             }
         }
